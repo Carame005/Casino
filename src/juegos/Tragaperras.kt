@@ -3,12 +3,13 @@ import kotlin.random.Random
 
 class Tragaperras(nombre : String,monto : Int) : Juego(nombre,monto) {
     override fun iniciarJuego() {
-        var apuesta = false
-        println("Ingrese una cantidad a apostar: ")
-        while(apuesta == false){
+        do {
+            println("Ingrese una cantidad a apostar: ")
             val cantidad = readLine()!!.toInt()
-            apuesta = apostar(cantidad)
-        }
+            if (!apostar(cantidad)) {
+                println("No tiene suficiente dinero para esta apuesta.")
+            }
+        } while (!apostar(cantidad))
         println(girarRuleta())
     }
 
@@ -16,13 +17,11 @@ class Tragaperras(nombre : String,monto : Int) : Juego(nombre,monto) {
         val SIMBOLOS_DE_RULETA = arrayOf("☆","♕","☺","♢")
     }
 
-    fun girarRuleta(): Array<String.Companion> {
-        var simbolos = arrayOf(String.Companion)
-        for (i in 3){
-            simbolos[i] = SIMBOLOS_DE_RULETA.random()
-        }
+    fun girarRuleta(): Array<String> {
+        val simbolos = Array(3) { SIMBOLOS_DE_RULETA.random() }
         return simbolos
     }
+
 
     override fun mostrarResultados() {
         TODO("Not yet implemented")
